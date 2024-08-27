@@ -40,9 +40,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install tfsec
-        run: |
-          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install.sh | bash
+      
 
       - name: Run tfsec
         run: tfsec .
