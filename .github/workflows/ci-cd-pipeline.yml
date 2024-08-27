@@ -99,11 +99,30 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       
+  juice-shop-tests:
+    name: Juice Shop Tests
+    runs-on: ubuntu-latest
+    needs: snyk-security-scan
+
+    steps:
+      - name: Checkout your repository
+        uses: actions/checkout@v2
+
+      - name: Clone Juice Shop repository
+        run: |
+          git clone https://github.com/juice-shop/juice-shop.git
+          cd juice-shop
+          npm install
+
+      - name: Run Juice Shop tests
+        run: |
+          cd juice-shop
+          npm test
 
   terraform-plan:
     name: Terraform Plan
     runs-on: ubuntu-latest
-    needs: [terraform-validate, terraform-lint, terraform-security-scan, terraform-checkov, snyk-security-scan]
+    needs: [terraform-validate, terraform-lint, terraform-security-scan, terraform-checkov, snyk-security-scan, juice-shop-tests]
 
     steps:
       - name: Checkout code
