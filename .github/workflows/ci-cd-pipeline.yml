@@ -1,6 +1,10 @@
 #.github/workflows/ci-cd-pipeline.yml
 name: CI/CD Pipeline
 
+permissions:
+  contents: read   
+  pull-requests: write  
+
 on:
   push:
     branches:
@@ -98,7 +102,7 @@ jobs:
           args: test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      
+
   juice-shop-tests:
     name: Juice Shop Tests
     runs-on: ubuntu-latest
